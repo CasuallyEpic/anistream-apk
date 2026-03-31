@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.AniStream" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Optional: Set a background color that matches your web app to prevent flicker -->
+        <item name="android:windowBackground">?android:colorBackground</item>
+    </style>
+</resources>
