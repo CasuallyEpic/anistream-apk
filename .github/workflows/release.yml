@@ -3,7 +3,7 @@ name: Build and Release APK
 on:
   push:
     tags:
-      - 'v*' # Trigger on version tags like v1.0.0
+      - 'v*'
 
 permissions:
   contents: write
@@ -25,16 +25,26 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build APK
-        run: ./gradlew assembleRelease
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
+
+      - name: Rename APK for Release
+        run: mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/AniStream-${{ github.ref_name }}.apk
 
       - name: Create GitHub Release
-        id: create_release
         uses: softprops/action-gh-release@v2
         with:
-          files: app/build/outputs/apk/release/app-release-unsigned.apk # You may need to sign this later
-          name: Release ${{ github.ref_name }}
-          tag_name: ${{ github.ref }}
+          files: app/build/outputs/apk/debug/AniStream-${{ github.ref_name }}.apk
+          name: AniStream ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+          body: |
+            ## AniStream ${{ github.ref_name }}
+            
+            ### Installation Instructions:
+            1. **Uninstall** any previous version of AniStream from your phone.
+            2. Download and install the `AniStream-${{ github.ref_name }}.apk` below.
+            
+            *Note: This is a debug-signed APK. If you get a "Blocked by Play Protect" warning, click "Install anyway".*
           draft: false
           prerelease: false
         env:
