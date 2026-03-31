@@ -47,8 +47,8 @@ dependencies {
     implementation(libs.material)
     
     // Networking and JSON for Auto-Update
-    implementation(libs.okhttp)
-    implementation(libs.gson)
+    implementation(libs.okhttp.lib)
+    implementation(libs.gson.lib)
     
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
